@@ -44,11 +44,9 @@ function draw() {
     let spectrum = fft.analyze();
 
     // Rotaciones independientes (el del medio gira al revés)
-    rotationAngles[0] += 0.005;  // ligeramente más rápido que el original
+    rotationAngles[0] += 0.005; 
     rotationAngles[1] -= 0.006;
     rotationAngles[2] += 0.007;
-
-
 
     // Transición suave entre 3 y 1 espectro
     if (fusion) transition = lerp(transition, 1, 0.05);
@@ -86,14 +84,15 @@ function draw() {
     }
 }
 
-function drawBars(spectrum, col, minR, maxR, rotationAngle, alphaVal = 255) {
+// DIbujo de espectros dependientes a graves (interno), voces(medio), agudos(externo)
+function drawBars(spectrum, col, minR, maxR, rotationAngle, alphaVal = 255, start = 0, end = 1) {
     push();
     rotate(rotationAngle);
     col.setAlpha(alphaVal);
     stroke(col);
     let len = spectrum.length;
     for (let i = 0; i < 360; i += 3) {
-        let index = floor(map(i, 0, 360, 0, len - 1));
+        let index = floor(map(i, 0, 360, start * len, end * len));
         let amp = spectrum[index];
         let r = map(amp, 0, 255, minR, maxR);
         let rad = radians(i);

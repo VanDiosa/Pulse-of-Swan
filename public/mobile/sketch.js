@@ -6,12 +6,12 @@ const threshold = 30; // movimiento mínimo para detectar un gesto
 const cooldown = 300; // milisegundos entre gestos
 
 function setup() {
-    createCanvas(360, 500); // un poco más grande
+    createCanvas(360, 500); 
     background(0);
     fill(255);
     textAlign(CENTER, CENTER);
     textSize(20);
-    text('Pulse of Swan', width / 2, height / 2 - 50);
+    text('Pulse of Swan 🦢', width / 2, height / 2 - 50);
     textSize(15);
     text('Desliza en dirección horizontal o vertical', width / 2, height / 2 + 30);
 
@@ -35,7 +35,7 @@ function touchMoved() {
     let dx = mouseX - lastTouchX;
     let dy = mouseY - lastTouchY;
 
-    if (abs(dx) < threshold && abs(dy) < threshold) return false; // ignora movimientos pequeños
+    if (abs(dx) < threshold && abs(dy) < threshold) return false; // ignorar movimientos pequeños
 
     let direction = "";
     if (abs(dx) > abs(dy)) {
@@ -51,7 +51,6 @@ function touchMoved() {
     lastTouchX = mouseX;
     lastTouchY = mouseY;
 
-    // Texto de retroalimentación en español
     background(0);
     fill(255);
     textSize(20);
