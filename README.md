@@ -27,3 +27,27 @@ El resultado es una fusión entre sonido, color y movimiento, que busca transmit
 ```bash
 npm install
 npm start
+```
+
+4. Realiza un Forward a port en Visual Studio Code mediante la pestaña PORTS y el puerto 3000 (este es el que está configurado en el archivo server.js)
+
+5. Cambia la visibilidad de la URL expuesta a Public. Ten presente que si lo dejas Private tendrás que autenticarte con tus credenciales de github tanto en tu computador (sitio web de escritorio) como en tu celular (sitio web móvil)
+
+Toma nota de la URL que te da Forward a port. Esta la necesitarás en el celular.
+
+6. Abre la página web en el computador
+
+http://localhost:3000/desktop/
+https://URL EN FORWARD A PORT/mobile/
+
+
+## Créditos 
+
+Proyecto desarrollado por Vanesa Herrera como exploración artística de sincronía visual y musical entre dispositivos.
+Inspirado en la canción “Black Swan” de BTS, cuya atmósfera melódica y emocional sirvió como base conceptual.
+
+Construido con:
+- Node.js
+- Express
+- Socket.io
+- p5.js
