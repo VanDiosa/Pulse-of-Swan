@@ -44,9 +44,11 @@ function draw() {
     let spectrum = fft.analyze();
 
     // Rotaciones independientes (el del medio gira al revés)
-    rotationAngles[0] += 0.002;
-    rotationAngles[1] -= 0.003;
-    rotationAngles[2] += 0.004;
+    rotationAngles[0] += 0.005;  // ligeramente más rápido que el original
+    rotationAngles[1] -= 0.006;
+    rotationAngles[2] += 0.007;
+
+
 
     // Transición suave entre 3 y 1 espectro
     if (fusion) transition = lerp(transition, 1, 0.05);
