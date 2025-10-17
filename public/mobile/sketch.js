@@ -1,54 +1,77 @@
 let socket;
-let lastTouchX = null; 
-let lastTouchY = null; 
-const threshold = 5;
+let lastTouchX = null;
+let lastTouchY = null;
+let lastSendTime = 0;
+const threshold = 30; // movimiento mínimo para detectar un gesto
+const cooldown = 300; // milisegundos entre gestos
 
 function setup() {
-    createCanvas(300, 400);
-    background(220);
+    createCanvas(360, 500); // un poco más grande
+    background(0);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textSize(20);
+    text('Pulse of Swan', width / 2, height / 2 - 50);
+    textSize(15);
+    text('Desliza en dirección horizontal o vertical', width / 2, height / 2 + 30);
+
     socket = io();
 
-    socket.on('connect', () => {
-        console.log('Connected to server');
-    });
-
-    socket.on('message', (data) => {
-        console.log(`Received message: ${data}`);
-    });
-
-    socket.on('disconnect', () => {
-        console.log('Disconnected from server');
-    });
-
-    socket.on('connect_error', (error) => {
-        console.error('Socket.IO error:', error);
-    });
+    socket.on('connect', () => console.log('Conectado al servidor'));
+    socket.on('disconnect', () => console.log('Desconectado del servidor'));
 }
 
-function draw() {
-    background(220);
-    fill(255, 128, 0);
-    textAlign(CENTER, CENTER);
-    textSize(24);
-    text('Touch to move the circle', width / 2, height / 2);
+function touchStarted() {
+    lastTouchX = mouseX;
+    lastTouchY = mouseY;
 }
 
 function touchMoved() {
-    if (socket && socket.connected) { 
-        let dx = abs(mouseX - lastTouchX);
-        let dy = abs(mouseY - lastTouchY);
+    if (!socket || !socket.connected) return false;
 
-        if (dx > threshold || dy > threshold || lastTouchX === null) {
-            let touchData = {
-                type: 'touch',
-                x: mouseX,
-                y: mouseY
-            };
-            socket.emit('message', touchData);
+    const now = millis();
+    if (now - lastSendTime < cooldown) return false; // evita enviar gestos seguidos
 
-            lastTouchX = mouseX;
-            lastTouchY = mouseY;
-        }
+    let dx = mouseX - lastTouchX;
+    let dy = mouseY - lastTouchY;
+
+    if (abs(dx) < threshold && abs(dy) < threshold) return false; // ignora movimientos pequeños
+
+    let direction = "";
+    if (abs(dx) > abs(dy)) {
+        direction = dx > 0 ? "right" : "left";
+    } else {
+        direction = dy > 0 ? "down" : "up";
     }
+
+    socket.emit('message', { type: 'touch', direction });
+    lastSendTime = now;
+
+    // Reinicia punto de referencia
+    lastTouchX = mouseX;
+    lastTouchY = mouseY;
+
+    // Texto de retroalimentación en español
+    background(0);
+    fill(255);
+    textSize(20);
+    let mensaje = "";
+
+    switch (direction) {
+        case "right":
+            mensaje = "Deslizaste hacia la derecha →";
+            break;
+        case "left":
+            mensaje = "← Deslizaste hacia la izquierda";
+            break;
+        case "down":
+            mensaje = "⬇ Capas fusionadas";
+            break;
+        case "up":
+            mensaje = "⬆ Capas separadas";
+            break;
+    }
+
+    text(mensaje, width / 2, height / 2);
     return false;
 }
