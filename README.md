@@ -1,49 +1,29 @@
-# Pasos para realizar los experimentos
+# Pulse of Swan 🦢  
 
-## Servidor
+## Idea principal 🎵  
+**Pulse of Swan** es una experiencia visual inspirada en la delicadeza y el movimiento de una melodía suave y envolvente.  
+La aplicación conecta un dispositivo móvil y una pantalla de escritorio, donde los gestos del usuario generan transiciones y fusiones de color que acompañan el ritmo de la pieza.  
 
-Este proyecto implementa un servidor web al que añade funcionalidades de Websocket usando socket.io. 
-El servir gestionará las solicitudes de páginas web y además la conexión socket.io (websocket) con los 
-clientes. La tarea del servidor web es servir dos 
-posibles sitios: un sitio móvil y un sitio de escritorio. El sitio 
-móvil leerá la posición x,y del sensor touch del celular y la enviará al socket.io. 
-Si hay un cliente de escritorio corriendo el sitio web de escritorio, este podría recibir la información 
-del touch del cliente móvil. Con esta información, pintará un círculo en la posición x,y recibida. 
-De nuevo, la comunicación entre los dos sitios se realizará mediante socket.io.
+Cada deslizamiento produce un cambio: las capas se separan o se mezclan, los tonos varían y la composición responde de forma fluida, como si todo danzara al compás de una misma música.  
+El resultado es una fusión entre sonido, color y movimiento, que busca transmitir calma, fluidez y sincronía.  
 
-* El archivo server.js contiene el código del servidor.
-* En la carpeta public están los dos sitios web: mobile y desktop.
+---
 
-Los pasos para ejecutar la aplicación son:
+### Características principales ✨
+- Interacción en tiempo real entre móvil y escritorio mediante **socket.io**.  
+- Gestos verticales para **fundir o separar capas**.  
+- Gestos horizontales para **cambiar la gama de colores**.  
+- Transiciones visuales suaves inspiradas en la sensación del movimiento y la armonía musical.  
+- Diseño minimalista y contemplativo que acompaña el ritmo de la pieza sonora.  
 
-* Clonar el repositorio.
+---
 
-* Abre el repositorio en Visual Studio Code (VSC)
+## Pasos para ejecutar la app 🔢
 
-* Abre la **Terminal** de VSC para ejecutar los sigiuentes comandos.
+1. Clona el repositorio localmente.  
+2. Abre el proyecto en **Visual Studio Code**.  
+3. En la terminal, ejecuta los siguientes comandos:
 
-* Instalar las dependencias con el comando
-
-``` bash
+```bash
 npm install
-```
-
-* Ejecutar el servidor con:
-
-``` bash
 npm start
-```
-* Realiza un **Forward a port** en Visual Studio Code mediante la pestaña **PORTS** y el puerto 3000 (este es el que está configurado en el archivo server.js)
-
-* Cambia la visibilidad de la URL expuesta a **Public**. Ten presente 
-que si lo dejas Private tendrás que autenticarte con tus credenciales de github tanto 
-en tu computador (sitio web de escritorio) como en tu celular (sitio web móvil)
-
-* Toma nota de la URL que te da **Forward a port**. Esta la necesitarás en el celular.
-
-* Abre la página web en el computador
-
-``` js
-http://localhost:3000/desktop/
-https://URL EN FORWARD A PORT/mobile/
-```
